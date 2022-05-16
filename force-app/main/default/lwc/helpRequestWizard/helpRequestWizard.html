@@ -1,0 +1,30 @@
+<template>
+    <h1>Please fill in all requiered information</h1>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input name="firstName" type="text" label="Your first name"
+            onchange={handleFieldChange}></lightning-input>
+    </div>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input name="lastName" type="text" label="Your last name"
+            onchange={handleFieldChange}></lightning-input>
+    </div>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input name="email" type="email" label="Email"
+            onchange={handleFieldChange}></lightning-input>
+    </div>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <label>Select what exactly you need</label>
+        <select name="type" onchange={handleFieldChange}>
+            <option value="Child Food">Child Food</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Personal Hygiene">Personal Hygiene</option>
+        </select>
+    </div>
+
+    <lightning-button variant="brand" label="Send your request" title="Send" 
+        onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
+</template>
