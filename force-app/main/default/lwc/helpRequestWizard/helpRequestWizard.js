@@ -1,9 +1,13 @@
 import { LightningElement, api } from 'lwc';
-import saveRequest from '@salesforce/apex/HelpRequestController.saveRequest'
+import saveRequest from '@salesforce/apex/HelpRequestController.saveRequest';
+import btnSendRequest from '@salesforce/label/c.btnSendRequest';
 
 export default class HelpRequestWizard extends LightningElement {
     @api showCountryProp;
     fieldsValues = {};
+    labels = {
+        btnSendRequest
+    };
 
     handleFieldChange(event) {
         const val = event.target.value;
@@ -20,9 +24,6 @@ export default class HelpRequestWizard extends LightningElement {
             type: this.fieldsValues.type
         };
 
-        //console.log(formData);
-        //console.log(JSON.stringify(formData));
-        
         saveRequest({jsonData: JSON.stringify(formData)})
         .then(res => {
             console.log('Success!');
