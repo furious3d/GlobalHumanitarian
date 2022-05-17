@@ -29,7 +29,7 @@ export default class HelpRequestWizard extends LightningElement {
             console.log('Success!');
         })
         .catch(err => {
-            console.log(err.getMessage());
+            console.error(err.body);
         });
     }
 }
