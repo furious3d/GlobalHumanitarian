@@ -28,4 +28,19 @@ public with sharing class HelpRequestController {
             throw new AuraHandledException('Failed to save date into Database');
         }
     }
+
+
+    @AuraEnabled
+    public static Map<String, String> getRequestTypes() {
+        Map<String, String> typesMap = new Map<String, String>();
+
+        Schema.DescribeFieldResult fieldResult = Case.Type.getDescribe();
+		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+
+		for( Schema.PicklistEntry pickListVal : ple){
+			typesMap.put(pickListVal.getValue(), pickListVal.getLabel());
+		}
+
+        return typesMap;
+    }
 }
