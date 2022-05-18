@@ -1,18 +1,18 @@
 <template>
-    <h1>Please fill in all requiered information</h1>
+    <h1>{labels.textheading}</h1>
 
     <div class="slds-p-around_medium lgc-bg">
-        <lightning-input name="firstName" type="text" label="Your first name"
+        <lightning-input name="firstName" type="text" label={labels.firstName}
             onchange={handleFieldChange}></lightning-input>
     </div>
 
     <div class="slds-p-around_medium lgc-bg">
-        <lightning-input name="lastName" type="text" label="Your last name"
+        <lightning-input name="lastName" type="text" label={labels.lastName}
             onchange={handleFieldChange}></lightning-input>
     </div>
 
     <div class="slds-p-around_medium lgc-bg">
-        <lightning-input name="email" type="email" label="Email"
+        <lightning-input name="email" type="email" label={labels.Email}
             onchange={handleFieldChange}></lightning-input>
     </div>
 
@@ -24,7 +24,15 @@
             <option value="Personal Hygiene">Personal Hygiene</option>
         </select>
     </div>
-
+    <lightning-card title="Select what exactly you need" icon-name="custom:custom14">
+        <ul class="slds-m-around_medium">
+            <template for:each={typesofassistance} for:item="typesofassistance">
+                <li key={typesofassistance.Value}>
+                    {typesofassistance.Label}
+                </li>
+            </template>
+        </ul>
+    </lightning-card>
     <lightning-button variant="brand" label={labels.btnSendRequest} title="Send" 
         onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
 </template>

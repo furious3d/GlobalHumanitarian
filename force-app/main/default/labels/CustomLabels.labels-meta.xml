@@ -7,4 +7,32 @@
         <shortDescription>Button on helr request form</shortDescription>
         <value>Send your request</value>
     </labels>
+    <labels>
+        <fullName>textheading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>message to user</shortDescription>
+        <value>Please fill in all requiered information</value>
+    </labels>
+    <labels>
+        <fullName>firstName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>the name of what the user should enter</shortDescription>
+        <value>Your first name</value>
+    </labels>
+    <labels>
+        <fullName>lastName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>the name of what the user should enter</shortDescription>
+        <value>Your last name</value>
+    </labels>
+    <labels>
+        <fullName>Email</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>user`s email</shortDescription>
+        <value>Email</value>
+    </labels>
 </CustomLabels>
