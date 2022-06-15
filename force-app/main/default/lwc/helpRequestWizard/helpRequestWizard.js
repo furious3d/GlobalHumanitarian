@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import saveRequest from '@salesforce/apex/HelpRequestController.saveRequest';
+import getRequestTypes from '@salesforce/apex/HelpRequestController.getRequestTypes';
 import btnSendRequest from '@salesforce/label/c.btnSendRequest';
 import textheading from '@salesforce/label/c.textheading';
 import firstName from '@salesforce/label/c.firstName';
@@ -16,14 +17,32 @@ export default class HelpRequestWizard extends LightningElement {
         lastName,
         Email
     };
-    typesofassistance=getRequestTypes();
+
+    typesofassistance=[];
+    saved = false;
+    erSaved=false;
+
+    loadData ()
+    {
+        getRequestTypes()
+        .then(res => {
+            this.typesofassistance = res;
+            console.log (res);
+        });
+    }
+
+    connectedCallback()
+    {
+        this.loadData ();
+    }
+
     handleFieldChange(event) {
         const val = event.target.value;
         const name = event.target.name;
 
         this.fieldsValues[name] = val;
     }
-
+    
     handleSave() {
         const formData = {
             firstname: this.fieldsValues.firstName,
@@ -31,13 +50,18 @@ export default class HelpRequestWizard extends LightningElement {
             email: this.fieldsValues.email,
             type: this.fieldsValues.type
         };
-
+        
         saveRequest({jsonData: JSON.stringify(formData)})
         .then(res => {
             console.log('Success!');
+            this.saved=true;
+            setTimeout (() => this.saved=false, 5000)
         })
         .catch(err => {
             console.error(err.body);
+            this.erSaved=true;
+            setTimeout (() => this.erSaved=false, 5000);
         });
     }
+   
 }
