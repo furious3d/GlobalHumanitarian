@@ -3,9 +3,9 @@ public with sharing class HelpRequestController {
         Map<String, Object> allData = new Map<String, Object>();
         allData = (Map<String, Object>) JSON.deserializeUntyped(jsonString);
         List <Contact> foundContacts=[SELECT FirstName, LastName, Email  
-        FROM Contact
-        WHERE (FirstName = :allData.get('firstname') AND LastName = :allData.get('lastname'))
-            OR Email = :allData.get('email')];
+            FROM Contact
+            WHERE (FirstName = :allData.get('firstname') AND LastName = :allData.get('lastname'))
+                OR Email = :allData.get('email')];
         return foundContacts;
     }
     
@@ -36,7 +36,7 @@ public with sharing class HelpRequestController {
             String formDateString = formatedDate();
 
             List <Contact> exsistingContacts = findContacts(jsonData);
-            Contact caseContact = new Contact();
+            
             if (exsistingContacts.isEmpty()) {
                 Contact caseContact = new Contact();
                 caseContact.FirstName = firstName;
