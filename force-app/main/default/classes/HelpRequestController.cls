@@ -1,21 +1,19 @@
 public with sharing class HelpRequestController {
-    @AuraEnabled
-    public static List <Contact> findContacts (){
+    public static List <Contact> findContacts (String jsonString){
+        Map<String, Object> allData = new Map<String, Object>();
+        allData = (Map<String, Object>) JSON.deserializeUntyped(jsonString);
         List <Contact> foundContacts=[SELECT FirstName, LastName, Email  
         FROM Contact
-        WHERE FirstName = :data.get('firstname') AND LastName = :data.get('lastname') 
-            OR Email = :data.get('email')];
+        WHERE (FirstName = :allData.get('firstname') AND LastName = :allData.get('lastname'))
+            OR Email = :allData.get('email')];
         return foundContacts;
     }
     
-    @AuraEnabled
     public static String formatedDate (){
         Date myDate = Date.today();
-        List <String> months = new List <String> {
-            'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
-        };
+        List <String> months = new List <String> {'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'};
         String day = (String) myDate.day();
-        String month = month.get(myDate.month()-1);
+        String month = months.get((myDate.month())-1);
         String year = (String) myDate.year();
         String dateString = day + '-' + month + '-' + year;
         return dateString;
@@ -36,14 +34,9 @@ public with sharing class HelpRequestController {
             String lastName = (String) data.get('lastname');
             String RequesterName = firstName + ' ' + lastName;
             String formDateString = formatedDate();
-            Case newCase = new Case();
-            newCase.ContactId = caseContact.Id;
-            newCase.Type = (String) data.get('type');
-            newCase.Subject = newCase.Type + ' request from ' + RequesterName + ' by ' + formDateString;
-            
-            insert newCase;
 
-            List <Contact> exsistingContacts = findContacts();
+            List <Contact> exsistingContacts = findContacts(jsonData);
+            Contact caseContact = new Contact();
             if (exsistingContacts.isEmpty()) {
                 Contact caseContact = new Contact();
                 caseContact.FirstName = firstName;
@@ -51,6 +44,16 @@ public with sharing class HelpRequestController {
                 caseContact.Email = (String) data.get('email');
                 insert caseContact;
             }
+            else {
+                Contact caseContact = exsistingContacts.get(0);
+            }
+
+            Case newCase = new Case();
+            newCase.ContactId = caseContact.Id;
+            newCase.Type = (String) data.get('type');
+            newCase.Subject = newCase.Type + ' request from ' + RequesterName + ' by ' + formDateString;
+            
+            insert newCase;
 
             return newCase;
         } catch(Exception ex) {
