@@ -21,6 +21,7 @@ export default class HelpRequestWizard extends LightningElement {
     typesofassistance=[];
     saved = false;
     erSaved=false;
+    disabledButton=false;
 
     loadData ()
     {
@@ -44,7 +45,9 @@ export default class HelpRequestWizard extends LightningElement {
     }
     
     handleSave() {
-        const formData = {
+        this.disabledButton=true;
+        const formData = 
+        {
             firstname: this.fieldsValues.firstName,
             lastname: this.fieldsValues.lastName,
             email: this.fieldsValues.email,
@@ -55,11 +58,13 @@ export default class HelpRequestWizard extends LightningElement {
         .then(res => {
             console.log('Success!');
             this.saved=true;
-            setTimeout (() => this.saved=false, 5000)
+            this.disabledButton=false;
+            setTimeout (() => this.saved=false, 5000);
         })
         .catch(err => {
             console.error(err.body);
             this.erSaved=true;
+            this.disabledButton=false;
             setTimeout (() => this.erSaved=false, 5000);
         });
     }

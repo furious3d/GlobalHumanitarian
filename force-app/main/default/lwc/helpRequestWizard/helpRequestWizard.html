@@ -27,7 +27,7 @@
     </lightning-card>
     
     <lightning-button variant="brand" label={labels.btnSendRequest} title="Send" id="btn" 
-        onclick= {handleSave} class="slds-m-left_x-small">
+        onclick= {handleSave} class="slds-m-left_x-small" disabled = {disabledButton}>
     </lightning-button>
     <template if:true={saved}>
         <div class="slds-notify_container slds-is-relative">
