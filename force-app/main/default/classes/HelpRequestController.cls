@@ -9,7 +9,8 @@ public with sharing class HelpRequestController {
     
     public static String formatedDate (){
         Date myDate = Date.today();
-        List <String> months = new List <String> {'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'};
+        List <String> months = new List <String> {
+            'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'};
         String day = String.valueOf(myDate.day());
         String month = months.get((myDate.month())-1);
         String year = String.valueOf(myDate.year());
