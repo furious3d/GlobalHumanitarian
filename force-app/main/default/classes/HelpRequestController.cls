@@ -1,12 +1,32 @@
 public with sharing class HelpRequestController {
+    String currentID = ' ';
+
     public static List <Contact> findContacts (String firstName, String lastName, String email){
         List <Contact> foundContacts=[SELECT FirstName, LastName, Email  
             FROM Contact
-            WHERE (FirstName = :firstName AND LastName = :lastName)
+            WHERE (FirstName = :firstName AND LastName = :lastName) 
                 OR Email = :email];
+
         return foundContacts;
     }
     
+    @AuraEnabled
+    public static List <Map<String, String>> findCases () {
+        List <Case> allcases = [SELECT Subject, ContactId, Status
+            FROM Case
+            WHERE ContactId = :currentID];
+
+        List <Map<String, String>> subjectStatus = new List <Map<String, String>>();
+        for (String variable : allcases) {
+            Map<String, String> opt=new Map<String, String>();
+            opt.put('Subject', variable.Subject);
+            opt.put('Status', variable.Status);
+            subjectStatus.add(opt);
+        }
+
+        return subjectStatus;
+    }
+
     public static String formatedDate (){
         Date myDate = Date.today();
         List <String> months = new List <String> {
@@ -15,6 +35,7 @@ public with sharing class HelpRequestController {
         String month = months.get((myDate.month())-1);
         String year = String.valueOf(myDate.year());
         String dateString = day + '-' + month + '-' + year;
+
         return dateString;
     }
 
@@ -25,7 +46,7 @@ public with sharing class HelpRequestController {
         try {
             data = (Map<String, Object>) JSON.deserializeUntyped(jsonData);
         } catch(Exception ex) {
-            throw new AuraHandledException('Invalid JSON data');
+            throw AuraHandledException('Invalid JSON data');
         }
 
         try {
@@ -47,6 +68,8 @@ public with sharing class HelpRequestController {
             else {
                 caseContact = exsistingContacts.get(0);
             }
+              
+            currentID = caseContact.Id;
 
             Case newCase = new Case();
             newCase.ContactId = caseContact.Id;
@@ -78,4 +101,3 @@ public with sharing class HelpRequestController {
         return typesMap;
     }
 }
-

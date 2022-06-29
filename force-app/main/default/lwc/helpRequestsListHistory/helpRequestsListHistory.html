@@ -1,3 +1,13 @@
 <template>
-
+    <lightning-card> 
+        <h1 style="color:blue;">Your previous reqest</h1>
+        <template for:each={staSubHistory} for:item="cases">
+            <p key = {cases.Subject} style="color:red;">
+                {cases.Subject}
+            </p>
+            <p key = {cases.Status} style="color:red;" align="left">
+                {cases.Subject}
+            </p>
+        </template>
+    </lightning-card>
 </template>
