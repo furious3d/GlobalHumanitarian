@@ -1,14 +1,30 @@
 import { LightningElement } from 'lwc';
+import findCases from '@salesforce/apex/HelpRequestController.findCases';
+import pubSub from 'c/pubSub';
 
 export default class HelpRequestListHistory extends LightningElement {
-    staSubHistory = []
+    itemsList = [];
+    contactId;
 
     loadHistory ()
     {
-        findCases ()
-        .then(res => {
-            this.staSubHistory = res;
-            console.log (res);
+        if (this.contactId != null)
+        {
+            findCases({'contactID': this.contactId})
+            .then(res => {
+                this.itemsList = res;
+                console.log (res);
+            })
+            .catch(err => {
+                console.error(err.body);
+            });
+        }
+    }
+    connectedCallback()
+    {
+        pubSub.subscribe('ContactIDUpdate', function (params){
+            this.contactId = params;
+            this.loadHistory();
         });
     }
 }

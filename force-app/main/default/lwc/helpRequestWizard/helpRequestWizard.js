@@ -6,6 +6,7 @@ import textheading from '@salesforce/label/c.textheading';
 import firstName from '@salesforce/label/c.firstName';
 import lastName from '@salesforce/label/c.lastName';
 import Email from '@salesforce/label/c.Email';
+import pubSub from 'c/pubSub';
 
 export default class HelpRequestWizard extends LightningElement {
     @api showCountryProp;
@@ -57,6 +58,7 @@ export default class HelpRequestWizard extends LightningElement {
         saveRequest({jsonData: JSON.stringify(formData)})
         .then(res => {
             console.log('Success!');
+            pubSub.publish ('ContactIDUpdate', res.Id);
             this.saved = true;
             this.disabledButton = false;
             setTimeout (() => this.saved=false, 5000);

@@ -1,7 +1,7 @@
 <template>
     <lightning-card> 
         <h1 style="color:blue;">Your previous reqest</h1>
-        <template for:each={staSubHistory} for:item="cases">
+        <template for:each={itemsList} for:item="cases">
             <p key = {cases.Subject} style="color:red;">
                 {cases.Subject}
             </p>
