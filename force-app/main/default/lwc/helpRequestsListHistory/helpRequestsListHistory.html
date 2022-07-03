@@ -9,5 +9,11 @@
                 {cases.Subject}
             </p>
         </template>
+        <template if:true={noItemsLoaded}>
+            <p>Not loaded yet</p>
+        </template>
+        <template if:true={noItemsFound}>
+            <p>Not items found</p>
+        </template>
     </lightning-card>
 </template>
