@@ -1,12 +1,12 @@
 <template>
     <lightning-card> 
-        <h1 style="color:blue;">Your previous reqest</h1>
+        <h1 style="color:blue; margin-left: 10px;">Your previous reqest</h1>
         <template for:each={itemsList} for:item="cases">
-            <p key = {cases.Subject} style="color:red;">
+            <p key = {cases.Subject} style="color:red; margin-left: 10px;">
                 {cases.Subject}
             </p>
-            <p key = {cases.Status} style="color:red;" align="left">
-                {cases.Subject}
+            <p key = {cases.Status} style="color:red; margin-right: 10px;" align="right">
+                {cases.Status}
             </p>
         </template>
         <template if:true={noItemsLoaded}>

@@ -16,7 +16,7 @@ public with sharing class HelpRequestController {
             FROM Case
             WHERE ContactId = :contactID
             LIMIT 50];
-
+        contactCases.remove(0);
         return contactCases;
     }
 
