@@ -63,8 +63,11 @@ public with sharing class HelpRequestController {
             }
             
             Case newCase = new Case();
+            newCase.Type = String.valueOf(data.get('type'));
             newCase.ContactId = caseContact.Id;
-            newCase.Type = (String) data.get('type');
+            if (newCase.Type == null) {
+                newCase.Type = 'Food';
+            }
             newCase.Subject = newCase.Type + ' request from ' + RequesterName + ' by ' + formDateString;
             
             insert newCase;
